@@ -1,15 +1,19 @@
 import './App.css';
-import { HelloWorld } from './components/KanjiComponent';
-import { ThemeProvider } from 'styled-components';
-import theme from './theme';
+import { Provider as StyletronProvider } from 'styletron-react';
+import { LightTheme, DarkTheme, ThemeProvider, BaseProvider } from 'baseui';
+import { Client as Styletron } from 'styletron-engine-atomic';
+import { LandingPage } from './components/LandingPage';
+
+
+const engine = new Styletron();
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-        <HelloWorld />
-      </div>
-    </ThemeProvider>
+  <StyletronProvider value={engine}>
+    <BaseProvider theme={LightTheme}>
+      <LandingPage />
+    </BaseProvider>
+  </StyletronProvider>
   );
 }
 
