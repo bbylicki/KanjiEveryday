@@ -29,8 +29,8 @@ export function LandingPage(): JSX.Element {
             backgroundColor: "#FFFFFF",
             }}>
             <DisplayMedium style={{margin: "1rem"}}>Kanji Everday</DisplayMedium>
-            <KanjiComponent kanji={kanji}/>
-            <TranslationComponent kanji={kanji}/>
+            {kanji && <KanjiComponent kanji={kanji}/>}
+            {kanji && <TranslationComponent kanji={kanji}/>}
         </div>
     )
 }
