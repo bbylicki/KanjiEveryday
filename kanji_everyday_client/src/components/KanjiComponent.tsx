@@ -1,5 +1,5 @@
 import * as React from "react"
-import { kanji } from "./api/kanji";
+import { kanji } from "../api/kanji";
 
 export function HelloWorld(): JSX.Element {
     const [message, setMessage] = React.useState<string>("");

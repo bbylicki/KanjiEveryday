@@ -1,11 +1,15 @@
 import './App.css';
-import { HelloWorld } from './HelloWorld';
+import { HelloWorld } from './components/KanjiComponent';
+import { ThemeProvider } from 'styled-components';
+import theme from './theme';
 
 function App() {
   return (
-    <div className="App">
-      <HelloWorld />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <HelloWorld />
+      </div>
+    </ThemeProvider>
   );
 }
 

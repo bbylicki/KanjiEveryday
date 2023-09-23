@@ -2,7 +2,7 @@
     "python.testing.unittestArgs": [
         "-v",
         "-s",
-        "./kanji_everyday_service",
+        ".",
         "-p",
         "*test*.py"
     ],
