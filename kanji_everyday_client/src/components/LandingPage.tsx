@@ -2,6 +2,7 @@ import * as React from "react"
 import { KanjiComponent } from "./KanjiComponent";
 import { kanji } from "../api/kanji";
 import { TranslationComponent } from "./TranslationComponent";
+import { DisplayMedium } from "baseui/typography";
 
 export function LandingPage(): JSX.Element {
     const [kanji, setKanji] = React.useState<kanji>();
@@ -27,6 +28,7 @@ export function LandingPage(): JSX.Element {
             bottom: "10%",
             backgroundColor: "#FFFFFF",
             }}>
+            <DisplayMedium style={{margin: "1rem"}}>Kanji Everday</DisplayMedium>
             <KanjiComponent kanji={kanji}/>
             <TranslationComponent kanji={kanji}/>
         </div>
