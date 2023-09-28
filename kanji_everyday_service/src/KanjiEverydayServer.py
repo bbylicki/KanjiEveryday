@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import requests
+from util.KanjiObjects import Kanji, Radical, References, Example
 
 app = Flask(__name__)
 
@@ -27,7 +28,12 @@ def get_All_Kanji():
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             data = response.json()
-            return jsonify({'kanji': data[0]['kanji']['character'], 'translation': data[0]['kanji']['meaning']['english']})
+            kanji_obj = Kanji(data[0])
+            return jsonify({
+                  'kanji': kanji_obj.character,
+                  'translation': kanji_obj.meaning,
+                  'kunyomi': {'hiragana': kanji_obj.kunyomi_hiragana, 'romaji': kanji_obj.kunyomi_romaji}
+                 })
         else:
             print("Request failed with status code:", response.status_code)
     except requests.exceptions.RequestException as e:
