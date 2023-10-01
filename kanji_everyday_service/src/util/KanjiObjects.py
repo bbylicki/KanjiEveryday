@@ -2,16 +2,16 @@ import json
 
 class Kanji:
     def __init__(self, data):
-        self.character = data["kanji"]["character"]
-        self.meaning = data["kanji"]["meaning"]["english"]
-        self.strokes = data["kanji"]["strokes"]
-        self.onyomi_romaji = data["kanji"]["onyomi"]["romaji"]
-        self.onyomi_katakana = data["kanji"]["onyomi"]["katakana"]
-        self.kunyomi_romaji = data["kanji"]["kunyomi"]["romaji"]
-        self.kunyomi_hiragana = data["kanji"]["kunyomi"]["hiragana"]
-        self.video_poster = data["kanji"]["video"]["poster"]
-        self.video_mp4 = data["kanji"]["video"]["mp4"]
-        self.video_webm = data["kanji"]["video"]["webm"]
+        self.character = data["kanji"]
+        self.meaning = data["kmeaning"]
+        self.strokes = data["kstroke"]
+        self.onyomi_romaji = data["onyomi"]
+        self.onyomi_katakana = data["onyomi_ja"]
+        self.kunyomi_romaji = data["kunyomi"]
+        self.kunyomi_hiragana = data["kunyomi_ja"]
+        # self.video_poster = data["kanji"]["video"]["poster"]
+        # self.video_mp4 = data["kanji"]["video"]["mp4"]
+        # self.video_webm = data["kanji"]["video"]["webm"]
 
 class Radical:
     def __init__(self, data):

@@ -9,7 +9,8 @@ export function LandingPage(): JSX.Element {
     const [kanji, setKanji] = React.useState<kanji>();
 
     React.useEffect(() => {
-        fetch('http://127.0.0.1:5000/api/getKanji')
+        const index = Math.floor(Math.random() * 1234)
+        fetch(`http://127.0.0.1:5000/api/getKanji?index=${index}`)
         .then((response) => response.json())
         .then((data) => {
             const kunyomi: Kunyomi = {hiragana: data['kunyomi']['hiragana'], romaji: data['kunyomi']['romaji']}
