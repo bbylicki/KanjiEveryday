@@ -2,6 +2,7 @@ export interface kanji {
     character: string;
     meaning: Translations;
     kunyomi: Kunyomi;
+    onyomi: Onyomi;
 }
 
 interface Translations {
@@ -11,4 +12,9 @@ interface Translations {
 export interface Kunyomi {
     romaji: string;
     hiragana: string;
+}
+
+export interface Onyomi {
+    romaji: string;
+    katakana: string;
 }

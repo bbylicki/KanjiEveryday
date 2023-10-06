@@ -1,6 +1,6 @@
 import * as React from "react"
 import { KanjiComponent } from "./KanjiComponent";
-import { Kunyomi, kanji } from "../api/kanji";
+import { Kunyomi, Onyomi, kanji } from "../api/kanji";
 import { TranslationComponent } from "./TranslationComponent";
 import { DisplayMedium } from "baseui/typography";
 import { ReadingsComponent } from "./ReadingsComponent";
@@ -14,7 +14,8 @@ export function LandingPage(): JSX.Element {
         .then((response) => response.json())
         .then((data) => {
             const kunyomi: Kunyomi = {hiragana: data['kunyomi']['hiragana'], romaji: data['kunyomi']['romaji']}
-            const kanjiObject: kanji = {character: data['kanji'], meaning: {english: data['translation']}, kunyomi: kunyomi}
+            const onyomi: Onyomi = {katakana: data['onyomi']['katakana'], romaji: data['onyomi']['romaji']}
+            const kanjiObject: kanji = {character: data['kanji'], meaning: {english: data['translation']}, kunyomi: kunyomi, onyomi: onyomi}
             setKanji(kanjiObject);
         })
         .catch((error) => console.error("Error fetching message:", error))

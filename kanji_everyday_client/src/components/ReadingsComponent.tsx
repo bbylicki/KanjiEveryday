@@ -7,6 +7,9 @@ export function ReadingsComponent({kanji, style}:{kanji: kanji | undefined, styl
             <DisplaySmall >
                 Kunyomi: {kanji?.kunyomi.hiragana} {kanji?.kunyomi.romaji}
             </DisplaySmall>
+            <DisplaySmall >
+                Onyomi: {kanji?.onyomi.katakana} {kanji?.onyomi.romaji}
+            </DisplaySmall>
         </div>
     )
 }

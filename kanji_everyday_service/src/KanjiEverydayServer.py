@@ -15,7 +15,8 @@ def get_Kanji():
     return jsonify({
             'kanji': kanji_obj.character,
             'translation': kanji_obj.meaning,
-            'kunyomi': {'hiragana': kanji_obj.kunyomi_hiragana, 'romaji': kanji_obj.kunyomi_romaji}
+            'kunyomi': {'hiragana': kanji_obj.kunyomi_hiragana, 'romaji': kanji_obj.kunyomi_romaji},
+            'onyomi': {'katakana': kanji_obj.onyomi_katakana, 'romaji': kanji_obj.onyomi_romaji}
             })
 
 if __name__ == '__main__':
