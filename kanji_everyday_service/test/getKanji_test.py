@@ -100,5 +100,31 @@ class APITestCase(unittest.TestCase):
         # Check the expected keys in the JSON response
         self.assertEqual(response_data['onyomi']['romaji'], "ichi")
 
+    def test_get_kanji_valid_japanese_example_response(self):
+        # Make a GET request to the /api/getKanji endpoint
+        response = requests.get(f'{self.base_url}/api/getKanji?index=0')
+
+        # Check if the response status code is 200 (OK)
+        self.assertEqual(response.status_code, 200)
+
+        # Parse the JSON response
+        response_data = response.json()
+
+        # Check the expected keys in the JSON response
+        self.assertEqual(response_data['example']['japanese'], "一年生（いちねんせい）")
+
+    def test_get_kanji_valid_english_example_response(self):
+        # Make a GET request to the /api/getKanji endpoint
+        response = requests.get(f'{self.base_url}/api/getKanji?index=0')
+
+        # Check if the response status code is 200 (OK)
+        self.assertEqual(response.status_code, 200)
+
+        # Parse the JSON response
+        response_data = response.json()
+
+        # Check the expected keys in the JSON response
+        self.assertEqual(response_data['example']['meaning'], "first-year student")
+
 if __name__ == '__main__':
     unittest.main()

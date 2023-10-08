@@ -1,4 +1,5 @@
 import json
+import ast
 
 class Kanji:
     def __init__(self, data):
@@ -9,6 +10,7 @@ class Kanji:
         self.onyomi_katakana = data["onyomi_ja"]
         self.kunyomi_romaji = data["kunyomi"]
         self.kunyomi_hiragana = data["kunyomi_ja"]
+        self.examples = Example(data)
         # self.video_poster = data["kanji"]["video"]["poster"]
         # self.video_mp4 = data["kanji"]["video"]["mp4"]
         # self.video_webm = data["kanji"]["video"]["webm"]
@@ -34,9 +36,5 @@ class References:
 
 class Example:
     def __init__(self, data):
-        self.japanese = data["japanese"]
-        self.meaning = data["meaning"]["english"]
-        self.audio_opus = data["audio"]["opus"]
-        self.audio_aac = data["audio"]["aac"]
-        self.audio_ogg = data["audio"]["ogg"]
-        self.audio_mp3 = data["audio"]["mp3"]
+        self.japanese = data["examples"][0][0]
+        self.meaning = data['examples'][0][1]
