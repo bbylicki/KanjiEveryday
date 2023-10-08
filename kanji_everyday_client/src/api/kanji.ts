@@ -3,6 +3,7 @@ export interface kanji {
   meaning: Translations
   kunyomi: Kunyomi
   onyomi: Onyomi
+  example: Example
 }
 
 interface Translations {
@@ -17,4 +18,9 @@ export interface Kunyomi {
 export interface Onyomi {
   romaji: string
   katakana: string
+}
+
+export interface Example {
+  japanese: string
+  meaning: string
 }

@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { KanjiComponent } from './KanjiComponent'
-import { type Kunyomi, type Onyomi, type kanji } from '../api/kanji'
+import { type Example, type Kunyomi, type Onyomi, type kanji } from '../api/kanji'
 import { TranslationComponent } from './TranslationComponent'
 import { DisplayMedium } from 'baseui/typography'
 import { ReadingsComponent } from './ReadingsComponent'
+import { ExampleComponent } from './ExampleComponent'
 
 export function LandingPage (): JSX.Element {
   const [kanji, setKanji] = React.useState<kanji>()
@@ -15,7 +16,14 @@ export function LandingPage (): JSX.Element {
       .then((data) => {
         const kunyomi: Kunyomi = { hiragana: data.kunyomi.hiragana, romaji: data.kunyomi.romaji }
         const onyomi: Onyomi = { katakana: data.onyomi.katakana, romaji: data.onyomi.romaji }
-        const kanjiObject: kanji = { character: data.kanji, meaning: { english: data.translation }, kunyomi, onyomi }
+        const example: Example = { japanese: data.example.japanese, meaning: data.example.meaning }
+        const kanjiObject: kanji = {
+          character: data.kanji,
+          meaning: { english: data.translation },
+          kunyomi,
+          onyomi,
+          example
+        }
         setKanji(kanjiObject)
       })
       .catch((error) => { console.error('Error fetching message:', error) })
@@ -33,9 +41,10 @@ export function LandingPage (): JSX.Element {
           backgroundColor: '#FFFFFF'
         }}>
             <DisplayMedium style={componentStyle}>Kanji Everday</DisplayMedium>
-            {kanji && <KanjiComponent kanji={kanji} style={componentStyle}/>}
-            {kanji && <TranslationComponent kanji={kanji} style={componentStyle} />}
-            {kanji && <ReadingsComponent kanji={kanji} style={componentStyle} />}
+            {(kanji != null) && <KanjiComponent kanji={kanji} style={componentStyle}/>}
+            {(kanji != null) && <TranslationComponent kanji={kanji} style={componentStyle} />}
+            {(kanji != null) && <ReadingsComponent kanji={kanji} style={componentStyle} />}
+            {(kanji != null) && <ExampleComponent kanji={kanji} style={componentStyle} />}
         </div>
   )
 }
