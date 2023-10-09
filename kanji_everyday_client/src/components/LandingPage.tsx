@@ -1,10 +1,9 @@
 import * as React from 'react'
-import { KanjiComponent } from './KanjiComponent'
+import { KanjiOfTheDayComponent } from './KanjiOfTheDayComponent'
 import { type Example, type Kunyomi, type Onyomi, type kanji } from '../api/kanji'
-import { TranslationComponent } from './TranslationComponent'
 import { DisplayMedium } from 'baseui/typography'
-import { ReadingsComponent } from './ReadingsComponent'
-import { ExampleComponent } from './ExampleComponent'
+import { HorizontalStack } from '../containers/HorizontalStack'
+import { SupplmentalInformationPane } from './SupplementalInformationPane'
 
 export function LandingPage (): JSX.Element {
   const [kanji, setKanji] = React.useState<kanji>()
@@ -41,10 +40,10 @@ export function LandingPage (): JSX.Element {
           backgroundColor: '#FFFFFF'
         }}>
             <DisplayMedium style={componentStyle}>Kanji Everday</DisplayMedium>
-            {(kanji != null) && <KanjiComponent kanji={kanji} style={componentStyle}/>}
-            {(kanji != null) && <TranslationComponent kanji={kanji} style={componentStyle} />}
-            {(kanji != null) && <ReadingsComponent kanji={kanji} style={componentStyle} />}
-            {(kanji != null) && <ExampleComponent kanji={kanji} style={componentStyle} />}
+            <HorizontalStack>
+              {(kanji != null) && <KanjiOfTheDayComponent kanji={kanji} style={componentStyle}/>}
+              {(kanji != null) && <SupplmentalInformationPane kanji={kanji} style={componentStyle}/>}
+            </HorizontalStack>
         </div>
   )
 }
