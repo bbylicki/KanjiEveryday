@@ -23,10 +23,26 @@ test('Site renders Kunyomi reading(s) for the Kanji character in the Readings an
   await expect(translationText?.length).toBeGreaterThan(0);
 });
 
+test('Site renders Kunyomi Romaji reading(s) for the Kanji character in the Readings and Translations titled border', async ({ page }) => {
+  await page.goto('localhost:3000');
+
+  const translationText = await page.getByLabel("Readings and Translations-TitledBorder").getByLabel("kunyomiRomajiReadings").textContent();
+
+  await expect(translationText?.length).toBeGreaterThan(0);
+});
+
 test('Site renders Onyomi reading(s) for the Kanji character in the Readings and Translations titled border', async ({ page }) => {
   await page.goto('localhost:3000');
 
   const translationText = await page.getByLabel("Readings and Translations-TitledBorder").getByLabel("onyomiReadings").textContent();
+
+  await expect(translationText?.length).toBeGreaterThan(0);
+});
+
+test('Site renders Onyomi Romaji reading(s) for the Kanji character in the Readings and Translations titled border', async ({ page }) => {
+  await page.goto('localhost:3000');
+
+  const translationText = await page.getByLabel("Readings and Translations-TitledBorder").getByLabel("onyomiRomajiReadings").textContent();
 
   await expect(translationText?.length).toBeGreaterThan(0);
 });

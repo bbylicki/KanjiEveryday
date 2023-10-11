@@ -26,6 +26,8 @@ class APITestCase(unittest.TestCase):
         self.assertIn('katakana', response_data['onyomi'])
         self.assertIn('romaji', response_data['onyomi'])
         self.assertIn('example', response_data)
+        self.assertIn('japanese', response_data['example'])
+        self.assertIn('meaning', response_data['example'])
 
     def test_get_kanji_valid_Kanji_response(self):
         # Make a GET request to the /api/getKanji endpoint

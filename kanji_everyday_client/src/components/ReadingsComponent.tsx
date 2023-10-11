@@ -13,7 +13,10 @@ export function ReadingsComponent ({ kanji, style }: { kanji: kanji | undefined,
                         Kunyomi:
                     </DisplaySmall>
                     <DisplaySmall aria-label='kunyomiReadings'>
-                        {kanji?.kunyomi.hiragana} {kanji?.kunyomi.romaji}
+                        {kanji?.kunyomi.hiragana}
+                    </DisplaySmall>
+                    <DisplaySmall aria-label='kunyomiRomajiReadings'>
+                        {kanji?.kunyomi.romaji}
                     </DisplaySmall>
                 </HorizontalStack>
                 <HorizontalStack>
@@ -21,7 +24,10 @@ export function ReadingsComponent ({ kanji, style }: { kanji: kanji | undefined,
                         Onyomi:
                     </DisplaySmall>
                     <DisplaySmall aria-label='onyomiReadings'>
-                        {kanji?.onyomi.katakana} {kanji?.onyomi.romaji}
+                        {kanji?.onyomi.katakana}
+                    </DisplaySmall>
+                    <DisplaySmall aria-label='onyomiRomajiReadings'>
+                        {kanji?.onyomi.romaji}
                     </DisplaySmall>
                 </HorizontalStack>
             </VerticalStack>
