@@ -4,6 +4,7 @@ import { type Example, type Kunyomi, type Onyomi, type kanji } from '../api/kanj
 import { DisplayMedium } from 'baseui/typography'
 import { HorizontalStack } from '../containers/HorizontalStack'
 import { SupplmentalInformationPane } from './SupplementalInformationPane'
+import { TitledBorder } from '../containers/TitledBorder'
 
 export function LandingPage (): JSX.Element {
   const [kanji, setKanji] = React.useState<kanji>()
@@ -41,8 +42,12 @@ export function LandingPage (): JSX.Element {
         }}>
             <DisplayMedium style={componentStyle}>Kanji Everday</DisplayMedium>
             <HorizontalStack>
-              {(kanji != null) && <KanjiOfTheDayComponent kanji={kanji} style={componentStyle}/>}
-              {(kanji != null) && <SupplmentalInformationPane kanji={kanji} style={componentStyle}/>}
+              <TitledBorder title='Kanji'>
+                {(kanji != null) && <KanjiOfTheDayComponent kanji={kanji} style={componentStyle}/>}
+              </TitledBorder>
+              <TitledBorder title='Readings and Translations'>
+                {(kanji != null) && <SupplmentalInformationPane kanji={kanji} style={componentStyle}/>}
+              </TitledBorder>
             </HorizontalStack>
         </div>
   )

@@ -5,6 +5,8 @@ export function HorizontalStack ({ gap = '1.5rem', children, style }: { gap?: st
     <div style={{
       ...style,
       paddingTop: '0.5rem',
+      paddingRight: '1rem',
+      paddingLeft: '1rem',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
