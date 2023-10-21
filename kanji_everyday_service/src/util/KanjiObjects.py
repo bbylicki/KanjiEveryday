@@ -11,9 +11,6 @@ class Kanji:
         self.kunyomi_romaji = data["kunyomi"]
         self.kunyomi_hiragana = data["kunyomi_ja"]
         self.examples = Example(data)
-        # self.video_poster = data["kanji"]["video"]["poster"]
-        # self.video_mp4 = data["kanji"]["video"]["mp4"]
-        # self.video_webm = data["kanji"]["video"]["webm"]
 
 class Radical:
     def __init__(self, data):
