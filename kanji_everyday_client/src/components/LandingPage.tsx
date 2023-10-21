@@ -8,8 +8,9 @@ import { TitledBorder } from '../containers/TitledBorder'
 
 export function LandingPage (): JSX.Element {
   const [kanji, setKanji] = React.useState<kanji>()
+  const [index, setIndex] = React.useState<number>()
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     const index = Math.floor(Math.random() * 1234)
     fetch(`http://127.0.0.1:5000/api/getKanji?index=${index}`)
       .then(async (response) => await response.json())
@@ -25,6 +26,7 @@ export function LandingPage (): JSX.Element {
           example
         }
         setKanji(kanjiObject)
+        setIndex(index)
       })
       .catch((error) => { console.error('Error fetching message:', error) })
   }, [])
@@ -43,7 +45,7 @@ export function LandingPage (): JSX.Element {
             <DisplayMedium style={componentStyle}>Kanji Everday</DisplayMedium>
             <HorizontalStack>
               <TitledBorder title='Kanji'>
-                {(kanji != null) && <KanjiOfTheDayComponent kanji={kanji} style={componentStyle}/>}
+                {(kanji != null) && <KanjiOfTheDayComponent kanji={kanji} style={componentStyle} index={index}/>}
               </TitledBorder>
               <TitledBorder title='Readings and Translations'>
                 {(kanji != null) && <SupplmentalInformationPane kanji={kanji} style={componentStyle}/>}
