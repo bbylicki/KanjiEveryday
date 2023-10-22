@@ -12,3 +12,13 @@ class APITestCase(unittest.TestCase):
 
     # Check if the response status code is 200 (OK)
     self.assertEqual(response.status_code, 200)
+
+  def test_get_kanji_animation_is_valid(self):
+    # Make a GET request to the /api/getKanji endpoint
+    response = requests.get(f'{self.base_url}/api/getKanjiAnimation?index=0')
+
+    # check to see if response is an attachment
+    self.assertTrue("Content-Disposition" in response.headers)
+
+    # check to see if file is an mp4
+    self.assertTrue(response.headers["Content-Disposition"].endswith(".mp4"))
