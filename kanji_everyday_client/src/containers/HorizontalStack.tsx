@@ -11,6 +11,7 @@ export function HorizontalStack ({ gap = '1.5rem', children, style }: { gap?: st
       flexDirection: 'row',
       justifyContent: 'space-between',
       justifyItems: 'center',
+      height: 'auto',
       gap
     }}>
       {React.Children.toArray(children)}

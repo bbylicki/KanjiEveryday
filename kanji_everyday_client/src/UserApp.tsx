@@ -1,0 +1,39 @@
+import * as React from 'react'
+import { type Example, type Kunyomi, type Onyomi, type kanji } from './api/kanji'
+import { LandingPage } from './components/LandingPage'
+
+export function UserApp (): JSX.Element {
+  console.warn('rendering app')
+  const [kanji, setKanji] = React.useState<kanji>()
+  const [kanjiVideoURL, setKanjiVideoUrl] = React.useState('')
+
+  React.useEffect(() => {
+    const index = Math.floor(Math.random() * 1234)
+    fetch(`http://127.0.0.1:5000/api/getKanji?index=${index}`)
+      .then(async (response) => await response.json())
+      .then((data) => {
+        const kunyomi: Kunyomi = { hiragana: data.kunyomi.hiragana, romaji: data.kunyomi.romaji }
+        const onyomi: Onyomi = { katakana: data.onyomi.katakana, romaji: data.onyomi.romaji }
+        const example: Example = { japanese: data.example.japanese, meaning: data.example.meaning }
+        const kanjiObject: kanji = {
+          character: data.kanji,
+          meaning: { english: data.translation },
+          kunyomi,
+          onyomi,
+          example
+        }
+        setKanji(kanjiObject)
+      })
+      .catch((error) => { console.error('Error fetching message:', error) })
+
+    fetch(`http://127.0.0.1:5000/api/getKanjiAnimation?index=${index}`)
+      .then(async (response) => await response.blob())
+      .then((data) => {
+        const url = URL.createObjectURL(data)
+        setKanjiVideoUrl(url)
+      })
+      .catch((error) => { console.error('Error fetching message:', error) })
+  }, [])
+
+  return (<LandingPage kanji={kanji} kanjiVideoUrl={kanjiVideoURL}/>)
+}
