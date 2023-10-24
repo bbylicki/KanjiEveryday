@@ -2,20 +2,12 @@ import * as React from 'react'
 import './css/KanjiDrawingComponent.css'
 import { Layer, Line, Stage } from 'react-konva'
 import { VerticalStack } from '../containers/VericalStack'
+import { Button } from 'baseui/button'
+import { HorizontalStack } from '../containers/HorizontalStack'
 
 export function KanjiDrawingComponent (): JSX.Element {
-  return (
-    <VerticalStack>
-      <div className='App drawing-area'>
-        <DrawingArea />
-      </div>
-    </VerticalStack>
-  )
-}
-
-function DrawingArea (): JSX.Element {
-  const [lines, setLines] = React.useState<any>([])
   const isDrawing = React.useRef(false)
+  const [lines, setLines] = React.useState<any[]>([])
 
   const handleMouseDown = (e: any): void => {
     isDrawing.current = true
@@ -48,11 +40,43 @@ function DrawingArea (): JSX.Element {
     isDrawing.current = false
   }
 
+  const handleClear = (): void => {
+    setLines([])
+  }
+  const handleBack = (): void => {
+    setLines(lines.slice(0, -1))
+  }
+
+  return (
+    <VerticalStack>
+      <HorizontalStack>
+      <Button onClick={handleBack}>Back</Button>
+      <Button onClick={handleClear}>Clear</Button>
+      </HorizontalStack>
+      <div className='App drawing-area'>
+        <DrawingArea lines={lines} handleMouseDown={handleMouseDown} handleMouseMove={handleMouseMove} handleMouseUp={handleMouseUp}/>
+      </div>
+    </VerticalStack>
+  )
+}
+
+function DrawingArea (
+  {
+    lines,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp
+  }: {
+    lines: any
+    handleMouseDown: (e: any) => void
+    handleMouseMove: (e: any) => void
+    handleMouseUp: () => void
+  }): JSX.Element {
   return (
     <div className=" text-center text-dark">
       <Stage
-          width={200}
-          height={200}
+          width={248}
+          height={248}
           onMouseDown={handleMouseDown}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
