@@ -12,19 +12,6 @@ class Kanji:
         self.kunyomi_hiragana = data["kunyomi_ja"]
         self.examples = Example(data)
 
-class Radical:
-    def __init__(self, data):
-        self.character = data["radical"]["character"]
-        self.strokes = data["radical"]["strokes"]
-        self.image = data["radical"]["image"]
-        self.position_hiragana = data["radical"]["position"]["hiragana"]
-        self.position_romaji = data["radical"]["position"]["romaji"]
-        self.position_icon = data["radical"]["position"]["icon"]
-        self.name_hiragana = data["radical"]["name"]["hiragana"]
-        self.name_romaji = data["radical"]["name"]["romaji"]
-        self.meaning = data["radical"]["meaning"]["english"]
-        self.animation = data["radical"]["animation"]
-
 class References:
     def __init__(self, data):
         self.grade = data["references"]["grade"]
