@@ -1,4 +1,4 @@
-import { DisplaySmall } from 'baseui/typography'
+import { DisplayXSmall } from 'baseui/typography'
 import { type kanji } from '../api/kanji'
 import * as React from 'react'
 import { VerticalStack } from '../containers/VericalStack'
@@ -9,26 +9,26 @@ export function ReadingsComponent ({ kanji, style }: { kanji: kanji | undefined,
         <div style={style} aria-label="translation-text">
             <VerticalStack>
                 <HorizontalStack>
-                    <DisplaySmall >
+                    <DisplayXSmall >
                         Kunyomi:
-                    </DisplaySmall>
-                    <DisplaySmall aria-label='kunyomiReadings'>
+                    </DisplayXSmall>
+                    <DisplayXSmall aria-label='kunyomiReadings'>
                         {kanji?.kunyomi.hiragana}
-                    </DisplaySmall>
-                    <DisplaySmall aria-label='kunyomiRomajiReadings'>
+                    </DisplayXSmall>
+                    <DisplayXSmall aria-label='kunyomiRomajiReadings'>
                         {kanji?.kunyomi.romaji}
-                    </DisplaySmall>
+                    </DisplayXSmall>
                 </HorizontalStack>
                 <HorizontalStack>
-                    <DisplaySmall >
+                    <DisplayXSmall >
                         Onyomi:
-                    </DisplaySmall>
-                    <DisplaySmall aria-label='onyomiReadings'>
+                    </DisplayXSmall>
+                    <DisplayXSmall aria-label='onyomiReadings'>
                         {kanji?.onyomi.katakana}
-                    </DisplaySmall>
-                    <DisplaySmall aria-label='onyomiRomajiReadings'>
+                    </DisplayXSmall>
+                    <DisplayXSmall aria-label='onyomiRomajiReadings'>
                         {kanji?.onyomi.romaji}
-                    </DisplaySmall>
+                    </DisplayXSmall>
                 </HorizontalStack>
             </VerticalStack>
         </div>

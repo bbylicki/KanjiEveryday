@@ -12,7 +12,7 @@ CORS(app)
 @app.route('/api/getKanji')
 def get_Kanji():
     kanjiIndex = request.args.get('index')
-    data = pd.read_csv("../language_data/language-data/ka_data.csv")
+    data = pd.read_csv("../language_data/language-data/ka_data.csv", keep_default_na=False)
     data['examples'] = data['examples'].apply(lambda x: ast.literal_eval(x))
     kanji_obj = Kanji(data.iloc[int(kanjiIndex)])
     return jsonify({

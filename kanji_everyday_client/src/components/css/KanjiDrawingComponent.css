@@ -1,0 +1,11 @@
+h1 {
+  margin: 10% 33%;
+}
+
+.drawing-area {
+  width: 200px;
+  height: 200px;
+  background-color: lightgrey;
+  border: 2px solid black;
+  margin: 0% 0%;
+}

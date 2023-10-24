@@ -6,6 +6,7 @@ import { HorizontalStack } from '../containers/HorizontalStack'
 import { SupplmentalInformationPane } from './SupplementalInformationPane'
 import { TitledBorder } from '../containers/TitledBorder'
 import { KanjiVideoComponent } from './KanjiVideoComponent'
+import { KanjiDrawingComponent } from './KanjiDrawingComponent'
 
 export function LandingPage ({ kanji, kanjiVideoUrl }: { kanji?: kanji, kanjiVideoUrl: string }): JSX.Element {
   const componentStyle = { margin: '1rem' }
@@ -13,17 +14,20 @@ export function LandingPage ({ kanji, kanjiVideoUrl }: { kanji?: kanji, kanjiVid
   return (
         <div style={{
           position: 'fixed',
-          left: '10%',
-          right: '10%',
-          top: '10%',
-          bottom: '10%',
+          left: '5%',
+          right: '5%',
+          top: '5%',
+          bottom: '5%',
           backgroundColor: '#FFFFFF'
         }}>
             <DisplayMedium style={componentStyle}>Kanji Everday</DisplayMedium>
             <HorizontalStack>
               <TitledBorder title='Kanji'>
                 {(kanji != null) ? (<KanjiOfTheDayComponent kanji={kanji} style={componentStyle}/>) : (<></>)}
-                <KanjiVideoComponent kanjiVideoUrl={kanjiVideoUrl ?? ''} />
+                <HorizontalStack>
+                  <KanjiVideoComponent kanjiVideoUrl={kanjiVideoUrl ?? ''} />
+                  <KanjiDrawingComponent />
+                </HorizontalStack>
               </TitledBorder>
               <TitledBorder title='Readings and Translations'>
                 {(kanji != null) ? (<SupplmentalInformationPane kanji={kanji} style={componentStyle}/>) : (<></>)}
