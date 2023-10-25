@@ -4,6 +4,7 @@ import ast
 class Kanji:
     def __init__(self, data):
         self.character = data["kanji"]
+        self.kanji_name = data["kname"]
         self.meaning = data["kmeaning"]
         self.strokes = data["kstroke"]
         self.onyomi_romaji = data["onyomi"]
