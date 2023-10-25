@@ -18,6 +18,7 @@ class APITestCase(unittest.TestCase):
 
         # Check the expected keys in the JSON response
         self.assertIn('kanji', response_data)
+        self.assertIn('kanjiStrokeFileNames', response_data)
         self.assertIn('translation', response_data)
         self.assertIn('kunyomi', response_data)
         self.assertIn('hiragana', response_data['kunyomi'])
@@ -41,6 +42,19 @@ class APITestCase(unittest.TestCase):
 
         # Check the expected keys in the JSON response
         self.assertEqual(response_data['kanji'], "一")
+
+    def test_get_kanji_valid_SVG_response(self):
+        # Make a GET request to the /api/getKanji endpoint
+        response = requests.get(f'{self.base_url}/api/getKanji?index=0')
+
+        # Check if the response status code is 200 (OK)
+        self.assertEqual(response.status_code, 200)
+
+        # Parse the JSON response
+        response_data = response.json()
+
+        # Check the expected keys in the JSON response
+        self.assertEqual(response_data['kanjiStrokeFileNames'], ["1_1.svg"])
 
     def test_get_kanji_valid_english_kanji_translation_response(self):
         # Make a GET request to the /api/getKanji endpoint

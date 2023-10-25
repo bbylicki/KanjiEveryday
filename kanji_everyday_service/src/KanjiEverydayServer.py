@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, send_file
+from flask import Flask, jsonify, request, send_file, send_from_directory
 from flask_cors import CORS
 import pandas as pd
 from util.KanjiObjects import Kanji, References, Example
@@ -19,6 +19,7 @@ def get_Kanji():
     sortedSVGs = compileStrokeSvgs(kanji_obj.kanji_name)
     return jsonify({
             'kanji': kanji_obj.character,
+            'kanjiStrokeFileNames': sortedSVGs,
             'translation': kanji_obj.meaning,
             'kunyomi': {'hiragana': kanji_obj.kunyomi_hiragana, 'romaji': kanji_obj.kunyomi_romaji},
             'onyomi': {'katakana': kanji_obj.onyomi_katakana, 'romaji': kanji_obj.onyomi_romaji},
@@ -33,11 +34,20 @@ def numeric_sort_key(filename):
         return int(numeric_part)
     return 0
 
-def compileStrokeSvgs(kanjiName):
+def compileStrokeSvgs(kanjiName: str):
     kanjiStrokeDir = os.path.abspath("../language_data/kanji-strokes")
     fileList = os.listdir(kanjiStrokeDir)
+    if(kanjiName.isnumeric()):
+        kanjiName = kanjiName + "_"
     matching_files = [file for file in fileList if fnmatch.fnmatch(file, f"*{kanjiName}*")]
     return sorted(matching_files, key=numeric_sort_key)
+
+@app.route('/api/getStrokeSvg')
+def get_Stroke_Svg():
+    strokeFileName = request.args.get('fileName')
+    kanjiStrokeDir = os.path.abspath("../language_data/kanji-strokes")
+    return send_from_directory(kanjiStrokeDir, strokeFileName)
+
     
 
 @app.route('/api/getKanjiAnimation')
