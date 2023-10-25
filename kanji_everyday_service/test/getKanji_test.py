@@ -4,7 +4,7 @@ import requests
 class APITestCase(unittest.TestCase):
 
     def setUp(self):
-        self.base_url = 'http://localhost:5000'  # Update the URL if needed
+        self.base_url = 'http://localhost:5000'
 
     def test_get_kanji(self):
         # Make a GET request to the /api/getKanji endpoint
