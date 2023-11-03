@@ -14,8 +14,6 @@ test('Site auto-plays video for how to write the Kanji of the day', async ({ pag
 
   const isPaused = await videoElement.evaluate((video: HTMLVideoElement) => video.paused)
 
-  console.warn(isPaused)
-
   // Expect the Kanji video to NOT be paused
 
   await expect(isPaused).toEqual(false);
