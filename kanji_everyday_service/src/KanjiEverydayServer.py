@@ -1,18 +1,33 @@
 from flask import Flask, jsonify, request, send_file, send_from_directory
 from flask_cors import CORS
+from RandomNumberGenerator import durable_randint
+from datetime import timedelta
 import pandas as pd
 from util.KanjiObjects import Kanji, References, Example
 import ast
 import os
 import fnmatch
 
+
 app = Flask(__name__)
 
 CORS(app)
 
+indexGenerator = durable_randint(low=1, high=1000, duration=timedelta(seconds = 30))
+
+@app.route('/api/getKanjiEveryday')
+def get_Kanji_Everyday():
+    index = indexGenerator.__next__()
+    return get_Kanji(index)
+
+
 @app.route('/api/getKanji')
-def get_Kanji():
-    kanjiIndex = request.args.get('index')
+def get_Kanji(index = 0):
+    index_param = request.args.get('index')
+    if index_param:
+        kanjiIndex = index_param
+    else:
+        kanjiIndex = index
     data = pd.read_csv("../language_data/language-data/ka_data.csv", keep_default_na=False)
     data['examples'] = data['examples'].apply(lambda x: ast.literal_eval(x))
     kanji_obj = Kanji(data.iloc[int(kanjiIndex)])
@@ -23,7 +38,8 @@ def get_Kanji():
             'translation': kanji_obj.meaning,
             'kunyomi': {'hiragana': kanji_obj.kunyomi_hiragana, 'romaji': kanji_obj.kunyomi_romaji},
             'onyomi': {'katakana': kanji_obj.onyomi_katakana, 'romaji': kanji_obj.onyomi_romaji},
-            'example': {'japanese': kanji_obj.examples.japanese, 'meaning': kanji_obj.examples.meaning}
+            'example': {'japanese': kanji_obj.examples.japanese, 'meaning': kanji_obj.examples.meaning},
+            'index': kanjiIndex
             })
 
 # used to get numeric portion of SVG for placing double digits after single digits
@@ -48,11 +64,13 @@ def get_Stroke_Svg():
     kanjiStrokeDir = os.path.abspath("../language_data/kanji-strokes")
     return send_from_directory(kanjiStrokeDir, strokeFileName)
 
-    
-
 @app.route('/api/getKanjiAnimation')
-def get_Kanji_Animation():
-    kanjiIndex = request.args.get('index')
+def get_Kanji_Animation(index = 0):
+    index_param = request.args.get('index')
+    if index_param:
+        kanjiIndex = index_param
+    else:
+        kanjiIndex = index
     data = pd.read_csv("../language_data/language-data/ka_data.csv")
     kanji = data.iloc[int(kanjiIndex)]
     return createVideoObject(kanji['kname'])

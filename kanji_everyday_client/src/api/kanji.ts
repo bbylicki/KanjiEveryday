@@ -4,6 +4,7 @@ export interface kanji {
   kunyomi: Kunyomi
   onyomi: Onyomi
   example: Example
+  index: number
 }
 
 interface Translations {
