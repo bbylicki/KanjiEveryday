@@ -4,7 +4,7 @@ export function KanjiVideoComponent ({ kanjiVideoUrl }: { kanjiVideoUrl: string 
   return (
   <div>
     {kanjiVideoUrl.length > 0 &&
-     <video autoPlay={true} loop={true} aria-label='kanjiAnimation'>
+     <video autoPlay={true} loop={true} muted={true} aria-label='kanjiAnimation'>
       <source src={kanjiVideoUrl} type="video/mp4" />
     </video>}
   </div>

@@ -6,7 +6,7 @@ import { KanjiComponent } from './KanjiComponent'
 
 export function KanjiOfTheDayComponent ({ kanji, style }: { kanji: kanji | undefined, style: React.CSSProperties | undefined }): JSX.Element {
   return (
-    <VerticalStack>
+    <VerticalStack label='kanji-stack'>
       <KanjiComponent kanji={kanji} style={style} />
       <TranslationComponent kanji={kanji} style={style} />
     </VerticalStack>

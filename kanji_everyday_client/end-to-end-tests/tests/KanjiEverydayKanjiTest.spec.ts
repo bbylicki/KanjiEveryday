@@ -4,7 +4,7 @@ test('Site renders a kanji character in the Kanji titled border', async ({ page 
     await page.goto('localhost:3000');
   
     // Expect a title "to contain" a substring.
-    await expect(page.getByLabel('Kanji-TitledBorder').getByText(/[\x3400-\x4DB5\x4E00-\x9FCB\xF900-\xFA6A]/)).toBeVisible();
+    await expect(page.getByLabel('Kanji-TitledBorder').getByLabel("kanji-stack").getByText(/[\x3400-\x4DB5\x4E00-\x9FCB\xF900-\xFA6A]/)).toBeVisible();
   });
 
 test('Site renders an english translation for the Kanji character in the Kanji titled border', async ({ page }) => {

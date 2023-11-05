@@ -13,12 +13,12 @@ export function ExampleAudioButton ({ exampleAudioUrl }: { exampleAudioUrl: stri
   }
   return (
   <>
-    <Button onClick={togglePlay}>
+    <Button onClick={togglePlay} aria-label='example-play-button'>
       <ChevronRight size={32}/>
     </Button>
     {
     exampleAudioUrl !== '' &&
-      <audio ref={exampleAudioRef} autoPlay={false}>
+      <audio ref={exampleAudioRef} autoPlay={false} aria-label='example-audio'>
         <source src={exampleAudioUrl} />
       </audio>
     }

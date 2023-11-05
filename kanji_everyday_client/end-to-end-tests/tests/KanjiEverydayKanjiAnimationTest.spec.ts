@@ -10,6 +10,8 @@ test('Site renders video for how to write the Kanji of the day', async ({ page }
 test('Site auto-plays video for how to write the Kanji of the day', async ({ page }) => {
   await page.goto('localhost:3000');
 
+  await page.waitForTimeout(3000);
+
   const videoElement = page.getByLabel('Kanji-TitledBorder').getByLabel("KanjiAnimation")
 
   const isPaused = await videoElement.evaluate((video: HTMLVideoElement) => video.paused)
