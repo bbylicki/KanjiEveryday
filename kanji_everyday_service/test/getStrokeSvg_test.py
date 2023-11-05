@@ -20,3 +20,6 @@ class APITestCase(unittest.TestCase):
 
     # check to see if file is an mp4
     self.assertTrue(response.headers["Content-Disposition"].endswith(".svg"))
+
+if __name__ == '__main__':
+    unittest.main()

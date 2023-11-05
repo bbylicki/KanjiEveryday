@@ -22,3 +22,6 @@ class APITestCase(unittest.TestCase):
 
     # check to see if file is an mp4
     self.assertTrue(response.headers["Content-Disposition"].endswith(".mp4"))
+
+if __name__ == '__main__':
+    unittest.main()

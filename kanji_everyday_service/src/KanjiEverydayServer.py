@@ -13,7 +13,14 @@ app = Flask(__name__)
 
 CORS(app)
 
-indexGenerator = durable_randint(low=1, high=1000, duration=timedelta(seconds = 30))
+testingFlag = os.environ.get('KED_TESTING')
+
+if testingFlag:
+    kanjiDelta = timedelta(seconds = 5)
+else: 
+    kanjiDelta = timedelta(days=1)
+
+indexGenerator = durable_randint(low=1, high=1000, duration=kanjiDelta)
 
 @app.route('/api/getKanjiEveryday')
 def get_Kanji_Everyday():
