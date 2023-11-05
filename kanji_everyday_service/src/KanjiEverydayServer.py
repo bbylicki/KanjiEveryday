@@ -87,5 +87,18 @@ def createVideoObject(kanjiName):
     filePath = os.path.abspath("../language_data/kanji-animations/animations-mp4/kanji-animations/"+fileName)
     return send_file(filePath, as_attachment=True)
 
+@app.route('/api/getExampleAudio')
+def get_Kunyomi_Sound():
+    index = request.args.get('index')
+    data = pd.read_csv("../language_data/language-data/ka_data.csv")
+    kanji = data.iloc[int(index)]
+    return createSoundObject(kanji['kname'])
+
+def createSoundObject(kanjiName):
+    fileName = kanjiName+"_06_a"
+    filePath = os.path.abspath("../language_data/examples-audio/"+fileName)
+    return send_file(filePath, as_attachment=True)
+
+
 if __name__ == '__main__':
     app.run()
