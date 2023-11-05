@@ -3,8 +3,9 @@ import { type kanji } from '../api/kanji'
 import * as React from 'react'
 import { VerticalStack } from '../containers/VericalStack'
 import { HorizontalStack } from '../containers/HorizontalStack'
+import { ExampleAudioButton } from './ExampleAudioButton'
 
-export function ExampleComponent ({ kanji, style }: { kanji: kanji | undefined, style: React.CSSProperties | undefined }): JSX.Element {
+export function ExampleComponent ({ kanji, exampleAudioUrl, style }: { kanji: kanji | undefined, exampleAudioUrl: string | undefined, style: React.CSSProperties | undefined }): JSX.Element {
   return (
         <div style={style} aria-label="translation-text">
             <VerticalStack>
@@ -15,6 +16,7 @@ export function ExampleComponent ({ kanji, style }: { kanji: kanji | undefined, 
                     <DisplaySmall aria-label='exampleJapanese'>
                         {kanji?.example.japanese}
                     </DisplaySmall>
+                    <ExampleAudioButton exampleAudioUrl={exampleAudioUrl ?? ''}/>
                 </HorizontalStack>
                 <HorizontalStack>
                     <DisplaySmall >

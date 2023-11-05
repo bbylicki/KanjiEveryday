@@ -3,9 +3,9 @@ import { type Example, type Kunyomi, type Onyomi, type kanji } from './api/kanji
 import { LandingPage } from './components/LandingPage'
 
 export function UserApp (): JSX.Element {
-  console.warn('rendering app')
   const [kanji, setKanji] = React.useState<kanji>()
   const [kanjiVideoURL, setKanjiVideoUrl] = React.useState('')
+  const [exampleAudioURL, setExampleAudioUrl] = React.useState('')
 
   const fetchPosts = async (): Promise<void> => {
     let index = 0
@@ -27,11 +27,20 @@ export function UserApp (): JSX.Element {
         setKanji(kanjiObject)
       })
       .catch((error) => { console.error('Error fetching message:', error) })
+
     fetch(`http://127.0.0.1:5000/api/getKanjiAnimation?index=${index}`)
       .then(async (response) => await response.blob())
       .then((data) => {
         const url = URL.createObjectURL(data)
         setKanjiVideoUrl(url)
+      })
+      .catch((error) => { console.error('Error fetching message:', error) })
+
+    fetch(`http://127.0.0.1:5000/api/getExampleAudio?index=${index}`)
+      .then(async (response) => await response.blob())
+      .then((data) => {
+        const url = URL.createObjectURL(data)
+        setExampleAudioUrl(url)
       })
       .catch((error) => { console.error('Error fetching message:', error) })
   }
@@ -40,5 +49,5 @@ export function UserApp (): JSX.Element {
     void fetchPosts()
   }, [])
 
-  return (<LandingPage kanji={kanji} kanjiVideoUrl={kanjiVideoURL}/>)
+  return (<LandingPage kanji={kanji} kanjiVideoUrl={kanjiVideoURL} exampleAudioUrl={exampleAudioURL}/>)
 }

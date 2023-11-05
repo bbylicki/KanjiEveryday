@@ -8,7 +8,7 @@ import { TitledBorder } from '../containers/TitledBorder'
 import { KanjiVideoComponent } from './KanjiVideoComponent'
 import { KanjiDrawingComponent } from './KanjiDrawingComponent'
 
-export function LandingPage ({ kanji, kanjiVideoUrl }: { kanji?: kanji, kanjiVideoUrl: string }): JSX.Element {
+export function LandingPage ({ kanji, kanjiVideoUrl, exampleAudioUrl }: { kanji?: kanji, kanjiVideoUrl: string, exampleAudioUrl: string }): JSX.Element {
   const componentStyle = { margin: '1rem' }
 
   return (
@@ -25,12 +25,12 @@ export function LandingPage ({ kanji, kanjiVideoUrl }: { kanji?: kanji, kanjiVid
               <TitledBorder title='Kanji'>
                 {(kanji != null) ? (<KanjiOfTheDayComponent kanji={kanji} style={componentStyle}/>) : (<></>)}
                 <HorizontalStack>
-                  <KanjiVideoComponent kanjiVideoUrl={kanjiVideoUrl ?? ''} />
+                  <KanjiVideoComponent kanjiVideoUrl={kanjiVideoUrl} />
                   <KanjiDrawingComponent />
                 </HorizontalStack>
               </TitledBorder>
               <TitledBorder title='Readings and Translations'>
-                {(kanji != null) ? (<SupplmentalInformationPane kanji={kanji} style={componentStyle}/>) : (<></>)}
+                {(kanji != null) ? (<SupplmentalInformationPane kanji={kanji} exampleAudioUrl={exampleAudioUrl} style={componentStyle}/>) : (<></>)}
               </TitledBorder>
             </HorizontalStack>
         </div>
