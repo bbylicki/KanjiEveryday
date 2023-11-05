@@ -95,7 +95,7 @@ def get_Kunyomi_Sound():
     return createSoundObject(kanji['kname'])
 
 def createSoundObject(kanjiName):
-    fileName = kanjiName+"_06_a"
+    fileName = kanjiName+"_06_a.mp3"
     filePath = os.path.abspath("../language_data/examples-audio/"+fileName)
     return send_file(filePath, as_attachment=True)
 
