@@ -10,6 +10,17 @@ import { KanjiDrawingComponent } from './KanjiDrawingComponent'
 
 export function LandingPage ({ kanji, kanjiVideoUrl, exampleAudioUrl }: { kanji?: kanji, kanjiVideoUrl: string, exampleAudioUrl: string }): JSX.Element {
   const componentStyle = { margin: '1rem' }
+  const [svgUrl, setSvgUrl] = React.useState('')
+
+  React.useEffect(() => {
+    fetch('http://127.0.0.1:5000/api/getStrokeSvg?fileName=1_1.svg')
+      .then(async (response) => await response.blob())
+      .then((data) => {
+        const url = URL.createObjectURL(data)
+        setSvgUrl(url)
+      })
+      .catch((error) => { console.error('Error fetching message:', error) })
+  }, [])
 
   return (
         <div style={{
@@ -26,7 +37,7 @@ export function LandingPage ({ kanji, kanjiVideoUrl, exampleAudioUrl }: { kanji?
                 {(kanji != null) ? (<KanjiOfTheDayComponent kanji={kanji} style={componentStyle}/>) : (<></>)}
                 <HorizontalStack>
                   <KanjiVideoComponent kanjiVideoUrl={kanjiVideoUrl} />
-                  <KanjiDrawingComponent />
+                  <KanjiDrawingComponent svgUrl={svgUrl}/>
                 </HorizontalStack>
               </TitledBorder>
               <TitledBorder title='Readings and Translations'>

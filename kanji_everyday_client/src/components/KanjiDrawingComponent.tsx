@@ -1,11 +1,12 @@
 import * as React from 'react'
 import './css/KanjiDrawingComponent.css'
-import { Layer, Line, Stage } from 'react-konva'
+import { Image, Layer, Line, Stage } from 'react-konva'
 import { VerticalStack } from '../containers/VericalStack'
 import { Button } from 'baseui/button'
 import { HorizontalStack } from '../containers/HorizontalStack'
+import useImage from 'use-image'
 
-export function KanjiDrawingComponent (): JSX.Element {
+export function KanjiDrawingComponent ({ svgUrl }: { svgUrl: string }): JSX.Element {
   const isDrawing = React.useRef(false)
   const [lines, setLines] = React.useState<any[]>([])
 
@@ -54,7 +55,7 @@ export function KanjiDrawingComponent (): JSX.Element {
       <Button onClick={handleClear}>Clear</Button>
       </HorizontalStack>
       <div className='App drawing-area'>
-        <DrawingArea lines={lines} handleMouseDown={handleMouseDown} handleMouseMove={handleMouseMove} handleMouseUp={handleMouseUp}/>
+        <DrawingArea lines={lines} svgUrl={svgUrl} handleMouseDown={handleMouseDown} handleMouseMove={handleMouseMove} handleMouseUp={handleMouseUp}/>
       </div>
     </VerticalStack>
   )
@@ -63,15 +64,18 @@ export function KanjiDrawingComponent (): JSX.Element {
 function DrawingArea (
   {
     lines,
+    svgUrl,
     handleMouseDown,
     handleMouseMove,
     handleMouseUp
   }: {
     lines: any
+    svgUrl: string
     handleMouseDown: (e: any) => void
     handleMouseMove: (e: any) => void
     handleMouseUp: () => void
   }): JSX.Element {
+  const [img] = useImage(svgUrl)
   return (
     <div className=" text-center text-dark">
       <Stage
@@ -82,6 +86,9 @@ function DrawingArea (
           onMouseup={handleMouseUp}
           className="canvas-stage"
       >
+        <Layer>
+          <Image key={0} image={img} width={248} height={248}/>
+        </Layer>
         <Layer>
           {lines.map((line: any, i: number) => (
             <Line

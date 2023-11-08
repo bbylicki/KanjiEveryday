@@ -88,7 +88,7 @@ def createVideoObject(kanjiName):
     return send_file(filePath, as_attachment=True)
 
 @app.route('/api/getExampleAudio')
-def get_Kunyomi_Sound():
+def get_Example_Audio():
     index = request.args.get('index')
     data = pd.read_csv("../language_data/language-data/ka_data.csv")
     kanji = data.iloc[int(index)]
