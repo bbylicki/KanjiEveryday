@@ -8,19 +8,25 @@ import { TitledBorder } from '../containers/TitledBorder'
 import { KanjiVideoComponent } from './KanjiVideoComponent'
 import { KanjiDrawingComponent } from './KanjiDrawingComponent'
 
-export function LandingPage ({ kanji, kanjiVideoUrl, exampleAudioUrl }: { kanji?: kanji, kanjiVideoUrl: string, exampleAudioUrl: string }): JSX.Element {
+export function LandingPage ({ kanji, kanjiVideoUrl, exampleAudioUrl, kanjiSvgList }: { kanji?: kanji, kanjiVideoUrl: string, exampleAudioUrl: string, kanjiSvgList: string[] }): JSX.Element {
   const componentStyle = { margin: '1rem' }
   const [svgUrl, setSvgUrl] = React.useState('')
+  const [svgIndex, setSvgIndex] = React.useState(0)
 
   React.useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/getStrokeSvg?fileName=1_1.svg')
+    fetch(`http://127.0.0.1:5000/api/getStrokeSvg?fileName=${kanjiSvgList[svgIndex]}`)
       .then(async (response) => await response.blob())
       .then((data) => {
         const url = URL.createObjectURL(data)
         setSvgUrl(url)
       })
       .catch((error) => { console.error('Error fetching message:', error) })
-  }, [])
+  }, [kanjiSvgList, svgIndex])
+
+  const handleSvgIndexIncrement = React.useCallback(() => {
+    const incrementedIndex = svgIndex + 1
+    if (incrementedIndex >= kanjiSvgList.length) { setSvgIndex(0) } else setSvgIndex(incrementedIndex)
+  }, [svgIndex, kanjiSvgList])
 
   return (
         <div style={{
@@ -37,7 +43,7 @@ export function LandingPage ({ kanji, kanjiVideoUrl, exampleAudioUrl }: { kanji?
                 {(kanji != null) ? (<KanjiOfTheDayComponent kanji={kanji} style={componentStyle}/>) : (<></>)}
                 <HorizontalStack>
                   <KanjiVideoComponent kanjiVideoUrl={kanjiVideoUrl} />
-                  <KanjiDrawingComponent svgUrl={svgUrl}/>
+                  <KanjiDrawingComponent svgUrl={svgUrl} handleNextSvg={handleSvgIndexIncrement}/>
                 </HorizontalStack>
               </TitledBorder>
               <TitledBorder title='Readings and Translations'>

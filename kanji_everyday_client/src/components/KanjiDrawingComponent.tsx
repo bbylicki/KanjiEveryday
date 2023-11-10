@@ -6,7 +6,7 @@ import { Button } from 'baseui/button'
 import { HorizontalStack } from '../containers/HorizontalStack'
 import useImage from 'use-image'
 
-export function KanjiDrawingComponent ({ svgUrl }: { svgUrl: string }): JSX.Element {
+export function KanjiDrawingComponent ({ svgUrl, handleNextSvg }: { svgUrl: string, handleNextSvg: () => void }): JSX.Element {
   const isDrawing = React.useRef(false)
   const [lines, setLines] = React.useState<any[]>([])
 
@@ -53,6 +53,7 @@ export function KanjiDrawingComponent ({ svgUrl }: { svgUrl: string }): JSX.Elem
       <HorizontalStack>
       <Button onClick={handleBack}>Back</Button>
       <Button onClick={handleClear}>Clear</Button>
+      <Button onClick={handleNextSvg}>Next</Button>
       </HorizontalStack>
       <div className='App drawing-area'>
         <DrawingArea lines={lines} svgUrl={svgUrl} handleMouseDown={handleMouseDown} handleMouseMove={handleMouseMove} handleMouseUp={handleMouseUp}/>
@@ -87,7 +88,7 @@ function DrawingArea (
           className="canvas-stage"
       >
         <Layer>
-          <Image key={0} image={img} width={248} height={248}/>
+          <Image key={0} image={img} width={248} height={248} opacity={0.5}/>
         </Layer>
         <Layer>
           {lines.map((line: any, i: number) => (
@@ -95,7 +96,7 @@ function DrawingArea (
               key={i}
               points={line.points}
               stroke="#000000"
-              strokeWidth={4}
+              strokeWidth={8}
               tension={0.5}
               lineCap="round"
               globalCompositeOperation={

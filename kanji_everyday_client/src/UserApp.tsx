@@ -6,6 +6,7 @@ export function UserApp (): JSX.Element {
   const [kanji, setKanji] = React.useState<kanji>()
   const [kanjiVideoURL, setKanjiVideoUrl] = React.useState('')
   const [exampleAudioURL, setExampleAudioUrl] = React.useState('')
+  const [kanjiStrokeFileNames, setKanjiStrokeFileNames] = React.useState<string[]>([])
 
   const fetchPosts = async (): Promise<void> => {
     let index = 0
@@ -25,6 +26,7 @@ export function UserApp (): JSX.Element {
           index: data.index
         }
         setKanji(kanjiObject)
+        setKanjiStrokeFileNames(data.kanjiStrokeFileNames)
       })
       .catch((error) => { console.error('Error fetching message:', error) })
 
@@ -49,5 +51,5 @@ export function UserApp (): JSX.Element {
     void fetchPosts()
   }, [])
 
-  return (<LandingPage kanji={kanji} kanjiVideoUrl={kanjiVideoURL} exampleAudioUrl={exampleAudioURL}/>)
+  return (<LandingPage kanji={kanji} kanjiVideoUrl={kanjiVideoURL} exampleAudioUrl={exampleAudioURL} kanjiSvgList={kanjiStrokeFileNames}/>)
 }
