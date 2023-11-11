@@ -5,10 +5,55 @@ import { VerticalStack } from '../containers/VericalStack'
 import { Button } from 'baseui/button'
 import { HorizontalStack } from '../containers/HorizontalStack'
 import useImage from 'use-image'
+import type Konva from 'konva'
 
 export function KanjiDrawingComponent ({ svgUrl, handleNextSvg }: { svgUrl: string, handleNextSvg: () => void }): JSX.Element {
   const isDrawing = React.useRef(false)
   const [lines, setLines] = React.useState<any[]>([])
+
+  const imageLayerRef = React.useRef<Konva.Layer>(null)
+  const drawLayerRef = React.useRef<Konva.Layer>(null)
+
+  const checkTracing = (): void => {
+    const imageLayerContext = imageLayerRef.current?.getCanvas()?.getContext()
+    const drawLayerContext = drawLayerRef.current?.getCanvas()?.getContext()
+
+    if ((imageLayerContext == null) || (drawLayerContext == null)) {
+      console.error('Context not available')
+    }
+
+    const safeImageWidth = imageLayerContext?.canvas.width ?? 0
+    const safeImageHeight = imageLayerContext?.canvas.height ?? 0
+
+    const imagePixelData = imageLayerContext?.getImageData(0, 0, safeImageWidth, safeImageHeight).data ?? new Uint8ClampedArray()
+    const imagePixelSvgIndidces: number[] = []
+
+    for (let i = 0; i < (imagePixelData.length); i += 4) {
+      if (imagePixelData[i + 3] !== 0) {
+        imagePixelSvgIndidces.push(i)
+      }
+    }
+
+    const drawPixelData = drawLayerContext?.getImageData(0, 0, safeImageWidth, safeImageHeight).data ?? []
+    const drawingPixelPossibleIntersections: number[] = []
+
+    for (let i = 0; i < (drawPixelData.length); i += 4) {
+      if (drawPixelData[i + 3] !== 0) {
+        drawingPixelPossibleIntersections.push(i)
+      }
+    }
+    const intersectionArray = imagePixelSvgIndidces.filter(value => drawingPixelPossibleIntersections.includes(value))
+
+    // Calculate the percentage of covered pixels
+    const percentageCovered = (intersectionArray.length / imagePixelSvgIndidces.length) * 100
+
+    // Provide feedback to the user based on the percentage
+    console.log('Percentage of image covered:', percentageCovered.toFixed(2) + '%')
+  }
+
+  React.useEffect(() => {
+    checkTracing()
+  }, [lines])
 
   const handleMouseDown = (e: any): void => {
     isDrawing.current = true
@@ -56,7 +101,15 @@ export function KanjiDrawingComponent ({ svgUrl, handleNextSvg }: { svgUrl: stri
       <Button onClick={handleNextSvg}>Next</Button>
       </HorizontalStack>
       <div className='App drawing-area'>
-        <DrawingArea lines={lines} svgUrl={svgUrl} handleMouseDown={handleMouseDown} handleMouseMove={handleMouseMove} handleMouseUp={handleMouseUp}/>
+        <DrawingArea
+          lines={lines}
+          svgUrl={svgUrl}
+          imageLayerRef={imageLayerRef}
+          drawLayerRef={drawLayerRef}
+          handleMouseDown={handleMouseDown}
+          handleMouseMove={handleMouseMove}
+          handleMouseUp={handleMouseUp}
+        />
       </div>
     </VerticalStack>
   )
@@ -66,12 +119,16 @@ function DrawingArea (
   {
     lines,
     svgUrl,
+    imageLayerRef,
+    drawLayerRef,
     handleMouseDown,
     handleMouseMove,
     handleMouseUp
   }: {
     lines: any
     svgUrl: string
+    imageLayerRef: React.RefObject<Konva.Layer>
+    drawLayerRef: React.RefObject<Konva.Layer>
     handleMouseDown: (e: any) => void
     handleMouseMove: (e: any) => void
     handleMouseUp: () => void
@@ -87,16 +144,17 @@ function DrawingArea (
           onMouseup={handleMouseUp}
           className="canvas-stage"
       >
-        <Layer>
+        <Layer ref={imageLayerRef} >
           <Image key={0} image={img} width={248} height={248} opacity={0.5}/>
         </Layer>
-        <Layer>
+        <Layer ref={drawLayerRef}>
           {lines.map((line: any, i: number) => (
             <Line
               key={i}
               points={line.points}
-              stroke="#000000"
-              strokeWidth={8}
+              stroke="#FF0000"
+              strokeWidth={10}
+              hitStrokeWidth={10}
               tension={0.5}
               lineCap="round"
               globalCompositeOperation={
