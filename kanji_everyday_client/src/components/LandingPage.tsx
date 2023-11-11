@@ -28,6 +28,15 @@ export function LandingPage ({ kanji, kanjiVideoUrl, exampleAudioUrl, kanjiSvgLi
     if (incrementedIndex >= kanjiSvgList.length) { setSvgIndex(0) } else setSvgIndex(incrementedIndex)
   }, [svgIndex, kanjiSvgList])
 
+  const handleSvgIndexDecrement = React.useCallback(() => {
+    if (svgIndex <= 0) setSvgIndex(0)
+    else setSvgIndex(svgIndex - 1)
+  }, [svgIndex, kanjiSvgList])
+
+  const handleSvgIndexReset = React.useCallback(() => {
+    setSvgIndex(0)
+  }, [svgIndex, kanjiSvgList])
+
   return (
         <div style={{
           position: 'fixed',
@@ -43,7 +52,7 @@ export function LandingPage ({ kanji, kanjiVideoUrl, exampleAudioUrl, kanjiSvgLi
                 {(kanji != null) ? (<KanjiOfTheDayComponent kanji={kanji} style={componentStyle}/>) : (<></>)}
                 <HorizontalStack>
                   <KanjiVideoComponent kanjiVideoUrl={kanjiVideoUrl} />
-                  <KanjiDrawingComponent svgUrl={svgUrl} handleNextSvg={handleSvgIndexIncrement}/>
+                  <KanjiDrawingComponent svgUrl={svgUrl} handleNextSvg={handleSvgIndexIncrement} handlePreviousSvg={handleSvgIndexDecrement} handleResetSvg={handleSvgIndexReset}/>
                 </HorizontalStack>
               </TitledBorder>
               <TitledBorder title='Readings and Translations'>

@@ -7,7 +7,7 @@ import { HorizontalStack } from '../containers/HorizontalStack'
 import useImage from 'use-image'
 import type Konva from 'konva'
 
-export function KanjiDrawingComponent ({ svgUrl, handleNextSvg }: { svgUrl: string, handleNextSvg: () => void }): JSX.Element {
+export function KanjiDrawingComponent ({ svgUrl, handleNextSvg, handlePreviousSvg, handleResetSvg }: { svgUrl: string, handleNextSvg: () => void, handlePreviousSvg: () => void, handleResetSvg: () => void }): JSX.Element {
   const isDrawing = React.useRef(false)
   const [lines, setLines] = React.useState<any[]>([])
 
@@ -84,9 +84,11 @@ export function KanjiDrawingComponent ({ svgUrl, handleNextSvg }: { svgUrl: stri
 
   const handleClear = (): void => {
     setLines([])
+    handleResetSvg()
   }
   const handleBack = (): void => {
     setLines(lines.slice(0, -1))
+    handlePreviousSvg()
   }
 
   return (
@@ -94,7 +96,6 @@ export function KanjiDrawingComponent ({ svgUrl, handleNextSvg }: { svgUrl: stri
       <HorizontalStack>
       <Button onClick={handleBack}>Back</Button>
       <Button onClick={handleClear}>Clear</Button>
-      <Button onClick={handleNextSvg}>Next</Button>
       </HorizontalStack>
       <div className='App drawing-area'>
         <DrawingArea
