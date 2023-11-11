@@ -14,7 +14,7 @@ export function KanjiDrawingComponent ({ svgUrl, handleNextSvg }: { svgUrl: stri
   const imageLayerRef = React.useRef<Konva.Layer>(null)
   const drawLayerRef = React.useRef<Konva.Layer>(null)
 
-  const checkTracing = (): void => {
+  const checkTracing = (): boolean => {
     const imageLayerContext = imageLayerRef.current?.getCanvas()?.getContext()
     const drawLayerContext = drawLayerRef.current?.getCanvas()?.getContext()
 
@@ -47,13 +47,8 @@ export function KanjiDrawingComponent ({ svgUrl, handleNextSvg }: { svgUrl: stri
     // Calculate the percentage of covered pixels
     const percentageCovered = (intersectionArray.length / imagePixelSvgIndidces.length) * 100
 
-    // Provide feedback to the user based on the percentage
-    console.log('Percentage of image covered:', percentageCovered.toFixed(2) + '%')
+    return percentageCovered > 85
   }
-
-  React.useEffect(() => {
-    checkTracing()
-  }, [lines])
 
   const handleMouseDown = (e: any): void => {
     isDrawing.current = true
@@ -84,6 +79,7 @@ export function KanjiDrawingComponent ({ svgUrl, handleNextSvg }: { svgUrl: stri
 
   const handleMouseUp = (): void => {
     isDrawing.current = false
+    if (checkTracing()) handleNextSvg()
   }
 
   const handleClear = (): void => {
