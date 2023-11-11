@@ -23,9 +23,20 @@ export function LandingPage ({ kanji, kanjiVideoUrl, exampleAudioUrl, kanjiSvgLi
       .catch((error) => { console.error('Error fetching message:', error) })
   }, [kanjiSvgList, svgIndex])
 
+  const handleKanjiDrawn = React.useCallback(() => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kanjiIndex: kanji?.index })
+    }
+    fetch('http://127.0.0.1:5000/api/postKanjiFinished', requestOptions)
+      .then(async (response) => await response.json())
+      .catch((error) => { console.error('Error fetching message:', error) })
+  }, [])
+
   const handleSvgIndexIncrement = React.useCallback(() => {
     const incrementedIndex = svgIndex + 1
-    if (incrementedIndex >= kanjiSvgList.length) { setSvgIndex(0) } else setSvgIndex(incrementedIndex)
+    if (incrementedIndex >= kanjiSvgList.length) { setSvgIndex(0); handleKanjiDrawn() } else setSvgIndex(incrementedIndex)
   }, [svgIndex, kanjiSvgList])
 
   const handleSvgIndexDecrement = React.useCallback(() => {
