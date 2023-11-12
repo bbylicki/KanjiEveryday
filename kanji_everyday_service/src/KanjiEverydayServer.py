@@ -99,6 +99,20 @@ def createSoundObject(kanjiName):
     filePath = os.path.abspath("../language_data/examples-audio/"+fileName)
     return send_file(filePath, as_attachment=True)
 
+@app.route('/api/postKanjiFinished', methods=['POST'])
+def post_Kanji_Finished():
+    try:
+        data = request.get_json()
+        kanji_index = data.get('kanjiIndex')
+        print(kanji_index)
+        response_data = {'status': 'success', 'message': 'Kanji processing complete'}
+        return jsonify(response_data)
+
+    except Exception as e:
+        error_message = str(e)
+        print(error_message)
+        response_data = {'status': 'error', 'message': error_message}
+        return jsonify(response_data), 500
 
 if __name__ == '__main__':
     app.run()
