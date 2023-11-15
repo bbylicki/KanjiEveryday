@@ -20,7 +20,7 @@ if testingFlag:
 else: 
     kanjiDelta = timedelta(days=1)
 
-indexGenerator = durable_randint(low=1, high=1000, duration=kanjiDelta)
+indexGenerator = durable_randint(low=0, high=1234, duration=kanjiDelta)
 
 @app.route('/api/getKanjiEveryday')
 def get_Kanji_Everyday():
@@ -103,7 +103,7 @@ def post_Kanji_Finished():
     try:
         data = request.get_json()
         kanji_index = data.get('kanjiIndex')
-        print(kanji_index)
+        flipKanjiCompleted(kanji_index)
         response_data = {'status': 'success', 'message': 'Kanji processing complete'}
         return jsonify(response_data)
 
@@ -112,6 +112,18 @@ def post_Kanji_Finished():
         print(error_message)
         response_data = {'status': 'error', 'message': error_message}
         return jsonify(response_data), 500
+
+def flipKanjiCompleted(index):
+    try:
+        csvPath = "../language_data/completed_Kanji.csv"
+        data = pd.read_csv(csvPath)
+        columnName = "completed"
+        data.at[int(index), columnName] = 1 - data.at[int(index), columnName]
+        data.to_csv(csvPath, index=False)
+        return True
+
+    except Exception as e:
+        raise(e)
 
 if __name__ == '__main__':
     app.run()
