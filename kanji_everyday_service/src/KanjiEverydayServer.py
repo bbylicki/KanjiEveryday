@@ -3,7 +3,7 @@ from flask_cors import CORS
 from RandomNumberGenerator import durable_randint
 from datetime import timedelta
 import pandas as pd
-from util.KanjiObjects import Kanji, References, Example
+from util.KanjiObjects import Kanji
 import ast
 import os
 import fnmatch
@@ -26,7 +26,6 @@ indexGenerator = durable_randint(low=1, high=1000, duration=kanjiDelta)
 def get_Kanji_Everyday():
     index = indexGenerator.__next__()
     return get_Kanji(index)
-
 
 @app.route('/api/getKanji')
 def get_Kanji(index = 0):
