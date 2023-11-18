@@ -17,8 +17,10 @@ testingFlag = os.environ.get('KED_TESTING')
 
 if testingFlag:
     kanjiDelta = timedelta(seconds = 5)
+    completedKanjiCsvPath = "../language_data/completed_Kanji_test.csv"
 else: 
     kanjiDelta = timedelta(days=1)
+    completedKanjiCsvPath = "../language_data/completed_Kanji.csv"
 
 indexGenerator = durable_randint(low=0, high=1234, duration=kanjiDelta)
 
@@ -104,7 +106,7 @@ def post_Kanji_Finished():
         data = request.get_json()
         kanji_index = data.get('kanjiIndex')
         flipKanjiCompleted(kanji_index)
-        response_data = {'status': 'success', 'message': 'Kanji processing complete'}
+        response_data = {'status': 'success', 'message': 'Kanji processing complete at index ' + str(kanji_index)}
         return jsonify(response_data)
 
     except Exception as e:
@@ -115,7 +117,7 @@ def post_Kanji_Finished():
 
 def flipKanjiCompleted(index):
     try:
-        csvPath = "../language_data/completed_Kanji.csv"
+        csvPath = completedKanjiCsvPath
         data = pd.read_csv(csvPath)
         columnName = "completed"
         data.at[int(index), columnName] = 1 - data.at[int(index), columnName]
