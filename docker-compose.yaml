@@ -1,0 +1,12 @@
+version: '3'
+services:
+  kanjieveryday:
+    build: ./kanji_everyday_service
+    ports:
+      - "5000:5000"  # Expose the Python server on port 5000
+  client:
+    build: ./kanji_everyday_client
+    ports:
+      - "3000:3000"  # Expose the React client on port 3000
+    depends_on:
+      - kanjieveryday
