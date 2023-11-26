@@ -70,7 +70,13 @@ def compileStrokeSvgs(kanjiName: str):
 def get_Stroke_Svg():
     strokeFileName = request.args.get('fileName')
     kanjiStrokeDir = os.path.abspath("../language_data/kanji-strokes")
-    return send_from_directory(kanjiStrokeDir, strokeFileName)
+    try:
+        return send_from_directory(kanjiStrokeDir, strokeFileName)
+    except Exception as e:
+        error_message = str(e)
+        print(error_message)
+        response_data = {'status': 'error', 'message': error_message}
+        return jsonify(response_data), 500
 
 @app.route('/api/getKanjiAnimation')
 def get_Kanji_Animation(index = 0):

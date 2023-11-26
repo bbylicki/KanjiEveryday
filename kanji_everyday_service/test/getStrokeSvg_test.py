@@ -21,5 +21,12 @@ class APITestCase(unittest.TestCase):
     # check to see if file is an mp4
     self.assertTrue(response.headers["Content-Disposition"].endswith(".svg"))
 
+  def test_get_stroke_svg_fails_gracefully(self):
+    # Make a GET request to the /api/getStrokeSvg endpoint with bad filename
+    response = requests.get(f'{self.base_url}/api/getStrokeSvg?fileName=badFile.svg')
+
+    # check to see if status is a failure
+    self.assertEqual(response.status_code, 500)
+
 if __name__ == '__main__':
     unittest.main()
